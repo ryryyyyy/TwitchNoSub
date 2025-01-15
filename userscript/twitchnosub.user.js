@@ -36,19 +36,18 @@
         constructor() {
             super(URL.createObjectURL(new Blob(["importScripts('https://cdn.jsdelivr.net/gh/besuper/TwitchNoSub/src/patch_amazonworker.js', 'https://cdn.jsdelivr.net/npm/amazon-ivs-player/dist/assets/amazon-ivs-worker.min.js');"])));
 
-            if (!isVariantA) {
-                this.addEventListener("message", (event) => {
-                    const data = event.data;
+            this.addEventListener("message", (event) => {
+               const data = event.data;
 
-                    if (data.id == 1 && data.type == 1) {
-                        const newData = event.data;
+               if ((data.id == 1 || isVariantA) && data.type == 1) {
+                const newData = event.data;
 
-                        newData.arg = [data.arg];
+                newData.arg = [data.arg];
 
-                        this.postMessage(newData);
-                    }
-                });
-            }
+                this.postMessage(newData)
+                }
+            });
         }
+    }
     }
 })();
